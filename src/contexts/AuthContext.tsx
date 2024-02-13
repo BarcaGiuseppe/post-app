@@ -20,16 +20,33 @@ export const useAuth = () => {
   return context;
 };
 
+export const getAuthFromLS = () => {
+  const cachedIsAuthValue: string | null = localStorage.getItem("isAuth");
+  const parsedIsAuthValue: boolean = !!cachedIsAuthValue ? true : false;
+  return parsedIsAuthValue;
+};
+
+const setAuthToLs = (value: boolean) => {
+  //const isAuthValue = JSON.parse(localStorage.getItem("isAuth")!);
+  value
+    ? localStorage.setItem("isAuth", "true")
+    : localStorage.removeItem("isAuth");
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(getAuthFromLS());
+
+  console.log(getAuthFromLS());
 
   const login = () => {
+    setAuthToLs(true);
     setIsAuthenticated(true);
   };
 
   const logout = () => {
+    setAuthToLs(false);
     setIsAuthenticated(false);
   };
 

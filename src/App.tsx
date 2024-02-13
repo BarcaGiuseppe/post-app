@@ -14,7 +14,7 @@ import PostDetails from "./pages/PostDetail";
 import Login from "./pages/Login";
 import RouteNotFound from "./pages/RouteNotFound";
 import Navbar from "./pages/Navbar";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 function Redirect() {
   return <Navigate to="/404" replace />;
@@ -26,23 +26,21 @@ function ProtectedRoute({ isAuthenticated }: any) {
 }
 
 function App() {
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth();
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
-            <Route path="/" element={<Post />} />
-            <Route path="/:slug" element={<PostDetails />} />
-          </Route>
-          <Route path="/404" element={<RouteNotFound />} />
-          <Route path="*" element={<Redirect />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/" element={<Post />} />
+          <Route path="/:slug" element={<PostDetails />} />
+        </Route>
+        <Route path="/404" element={<RouteNotFound />} />
+        <Route path="*" element={<Redirect />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
