@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAuthFromLS } from "../contexts/AuthContext";
 
 const PostDetail = () => {
   const [post, setPost] = useState<any>([]);
@@ -9,7 +8,6 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const { slug } = useParams();
   console.log(slug);
-  console.log(getAuthFromLS());
   useEffect(() => {
     const fetchPost = async () => {
       try {

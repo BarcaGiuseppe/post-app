@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { utilityGetAuthFromLS } from "../utils/utilityLS";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -20,12 +21,6 @@ export const useAuth = () => {
   return context;
 };
 
-export const getAuthFromLS = () => {
-  const cachedIsAuthValue: string | null = localStorage.getItem("isAuth");
-  const parsedIsAuthValue: boolean = !!cachedIsAuthValue ? true : false;
-  return parsedIsAuthValue;
-};
-
 const setAuthToLs = (value: boolean) => {
   //const isAuthValue = JSON.parse(localStorage.getItem("isAuth")!);
   value
@@ -36,9 +31,11 @@ const setAuthToLs = (value: boolean) => {
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(getAuthFromLS());
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    utilityGetAuthFromLS()
+  );
 
-  console.log(getAuthFromLS());
+  console.log(utilityGetAuthFromLS());
 
   const login = () => {
     setAuthToLs(true);
