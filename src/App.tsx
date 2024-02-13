@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   BrowserRouter,
+  HashRouter,
   Link,
   NavLink,
   Navigate,
@@ -29,7 +30,7 @@ function App() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -40,7 +41,7 @@ function App() {
         <Route path="/404" element={<RouteNotFound />} />
         <Route path="*" element={<Redirect />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
