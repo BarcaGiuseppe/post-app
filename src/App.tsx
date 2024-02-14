@@ -17,10 +17,6 @@ import RouteNotFound from "./pages/RouteNotFound";
 import Navbar from "./pages/Navbar";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
-function Redirect() {
-  return <Navigate to="/404" replace />;
-}
-
 function ProtectedRoute({ isAuthenticated }: any) {
   if (!isAuthenticated) return <Navigate to="/" />;
   return <Outlet />;
@@ -34,12 +30,14 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
-          <Route path="/" element={<Post />} />
-          <Route path="/:slug" element={<PostDetails />} />
+        <Route
+          path="/"
+          element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
+        >
+          <Route index element={<Post />} />
+          <Route path=":slug" element={<PostDetails />} />
         </Route>
-        <Route path="/404" element={<RouteNotFound />} />
-        <Route path="*" element={<Redirect />} />
+        <Route path="*" element={<RouteNotFound />} />
       </Routes>
     </HashRouter>
   );
