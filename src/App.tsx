@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import {
   BrowserRouter,
   HashRouter,
@@ -7,6 +7,7 @@ import {
   Navigate,
   Outlet,
   Route,
+  RouteProps,
   Routes,
   useParams,
 } from "react-router-dom";
@@ -32,7 +33,13 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route
           path="/"
-          element={<ProtectedRoute isAuthenticated={isAuthenticated} />}
+          element={
+            isAuthenticated ? (
+              <ProtectedRoute isAuthenticated={isAuthenticated} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
         >
           <Route index element={<Post />} />
           <Route path=":slug" element={<PostDetails />} />
